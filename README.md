@@ -1,65 +1,54 @@
-# Personalized Diet Planner
+# Personalised Diet Planner
 
-**Personalized Diet Planner** is a full-stack diet management application that leverages Artificial Intelligence to help users create customized meal plans based on their health profiles, dietary preferences, and fitness goals. The platform combines health metrics analysis, AI-powered meal recommendations, nutritional guidance, and personalized diet plans to create a comprehensive dietary management experience.
+*Personalised Diet Planner* is a full-stack diet management application that uses health metrics and AI-powered recommendations to create customized weekly meal plans. It combines BMI calculation, nutritional analysis, and Google Gemini AI coaching into a clean Flask + vanilla JavaScript experience.
 
 ## ✨ Key Features
 
-- **Health Profile Analysis:** Input personal health metrics including weight, height, age, activity level, and dietary preferences to create a personalized profile.
-- **BMI Calculation:** Automatically calculate Body Mass Index (BMI) and receive categorized health status (Underweight, Normal weight, Overweight, Obese).
-- **AI-Powered Meal Recommendations:** Generate personalized meal recommendations based on nutritional needs, health goals, and dietary restrictions using Google Gemini.
-- **Nutritional Database:** Access a comprehensive food dataset with detailed nutritional information including calories, proteins, fats, carbohydrates, and micronutrients.
-- **Customized Diet Plans:** Create role-specific diet plans tailored to fitness goals (weight loss, muscle gain, maintenance) and health conditions.
-- **Dietary Guidance:** Receive personalized nutrition advice, calorie tracking recommendations, and meal timing suggestions from AI.
-- **Modern User Interface:** Built with HTML5, CSS3, and vanilla JavaScript to provide a fast, responsive, and user-friendly experience.
+- *Health Profile Analysis:* Input age, gender, height, weight, activity level, fitness goal, and dietary preference.
+- *BMI Calculation:* Computes Body Mass Index and returns a categorized health status.
+- *AI-Powered Recommendations:* Google Gemini integration provides recipe guidance.
+- *Personalized Diet Plans:* Builds a 7-day meal plan with calorie targets and dietary preference filtering.
+- *Dietary Guidance:* Provides smart meal suggestions and health-focused insights.
+- *Modern User Interface:* Built with HTML5, CSS3, and vanilla JavaScript.
 
 ## Architecture
 
-Personalized Diet Planner follows a **decoupled frontend-backend architecture**, ensuring scalability, maintainability, and seamless AI integration.
+The app uses a *decoupled frontend-backend architecture*.
 
 ### Backend Responsibilities
 
-- REST API development
-- AI service integration (Google Gemini)
+- REST API endpoint (/api/plan)
 - Health metrics calculation
-- Nutritional data processing
-- Personalized recommendation generation
-- Diet plan management
+- Built-in nutrition data lookup and meal plan generation
+- Google Gemini AI coaching integration
 
 ### Frontend Responsibilities
 
-- Interactive user interface
-- Health profile form management
-- Real-time API communication
-- Diet plan visualization
-- Responsive user experience
+- User profile form handling
+- API communication with the backend
+- Weekly meal plan display
+- Clickable recipe detail presentation
+- Responsive and interactive UI
 
 ### Design Principles
 
-- Separation of Concerns
-- Modular Service Architecture
-- AI-Centric Personalization
-- Scalable and Extensible Design
+- Separation of concerns
+- Simple and maintainable structure
+- AI-enabled personalization
+- Easy extension and customization
 
----
-
-## 🛠️ Technology Stack
+## Technology Stack
 
 ### Backend
 
 - Python 3
 - Flask
-- Flask-CORS
-- Pandas (Data processing)
-- NumPy (Numerical computations)
+- google-generativeai
+- python-dotenv
 
 ### Artificial Intelligence
 
-- Google Gemini (`google-generativeai`)
-
-### Data Processing
-
-- Pandas
-- CSV-based nutritional database
+- Google Gemini (google-generativeai)
 
 ### Frontend
 
@@ -67,197 +56,130 @@ Personalized Diet Planner follows a **decoupled frontend-backend architecture**,
 - CSS3
 - Vanilla JavaScript
 
-### Development Tools
-
-- python-dotenv
-- pip
-- VS Code
-
----
-
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
-- Python 3.8+
-- Modern web browser (Chrome, Firefox, Edge, Safari)
-- *(Optional)* Google Gemini API Key for AI-powered coaching
+- Python 3.8+ installed
+- A modern browser (Chrome, Firefox, Edge, Safari)
 
 ### Clone the Repository
 
-```bash
+bash
 git clone <repository-url>
 cd "personalised diet planner"
-```
+
 
 ### Backend Setup
 
-```bash
+bash
 cd backend
-
-# Create virtual environment (Optional but recommended)
 python -m venv .venv
-
 # Windows
 .venv\Scripts\activate
-
 # macOS/Linux
-source .venv/bin/activate
-
-# Install dependencies
+# source .venv/bin/activate
 pip install -r requirements.txt
-```
 
-*(Optional)* Create a `.env` file in the backend directory to enable AI coaching:
 
-```
+Create a .env file in the backend/ folder to configure Google Gemini AI coaching:
+
+env
 GEMINI_API_KEY=your_api_key_here
-```
 
-**Note:** The app works without an API key. The key is only needed for personalized AI coaching.
 
 Run the backend server:
 
-```bash
+bash
 python app.py
-```
 
-The backend will start on `http://localhost:5000` (or the port specified in the console).
 
-### Frontend Setup
+Open the app in your browser:
 
-Simply open the application in your web browser:
-
-```
+text
 http://localhost:5000
-```
 
-The Flask server automatically serves the frontend static files and templates.
 
----
+## Project Structure
 
-## 📂 Project Structure
 
-```
-personalised-diet-planner/
+personalised diet planner/
 ├── backend/
-│   ├── app.py              # Flask application & API routes
-│   ├── food_dataset.csv    # Nutritional database
-│   ├── requirements.txt    # Python dependencies
-│   └── .env                # Environment variables (create this)
-│
+│   ├── app.py              
+│   ├── requirements.txt    
+│   └── .env               
 ├── frontend/
 │   ├── static/
 │   │   ├── css/
-│   │   │   └── style.css   # Styling
+│   │   │   └── style.css   
 │   │   └── js/
-│   │       └── app.js      # Frontend logic
-│   ├── templates/
-│   │   └── index.html      # Main page
-│   
+│   │       └── app.js      
+│   └── templates/
+│       └── index.html      
 └── README.md
-```
 
-## ⚙️ How It Works
 
-1. **Backend Processing:** When you submit your health profile, the Flask backend calculates BMI, daily calorie needs, and macro targets
-2. **Meal Recommendations:** The app generates a 7-day personalized meal plan from the nutritional database
-3. **AI Coaching (Optional):** If a Gemini API key is provided, the app generates personalized coaching tips and shopping lists
-4. **Results Display:** The frontend displays your metrics, weekly meal plan, and optional AI guidance
+##  How It Works
 
-## 🌟 Highlights
+1. The user submits health profile details through the frontend form.
+2. The Flask backend calculates BMI, daily calories, and macros.
+3. The backend generates a weekly meal plan from a built-in nutrition dataset.
+4. If GEMINI_API_KEY is provided, the backend requests AI coaching from Google Gemini.
+5. The frontend displays the weekly plan and allows users to click meals for quick recipe details.
 
-- ✨ AI-powered personalized diet planning
-- 💪 Health metric analysis and BMI calculation
-- 🍽️ Comprehensive nutritional database
-- 🎯 Customized meal recommendations based on goals
-- 📊 Automatic nutritional tracking
-- 🎨 Clean and intuitive user interface
-- ⚡ Fast response times with optimized AI queries
-- 📱 Responsive design for desktop and tablet devices
+##  Highlights
 
-## 🔮 Future Enhancements
+- AI-enabled meal guidance with Gemini integration
+- Personalized calorie and macro calculations
+- Built-in nutrition dataset for meal recommendations
+- Lightweight, dependency-minimal frontend
 
-- Mobile app (React Native/Flutter)
-- Grocery list generation and price estimation
-- Recipe integration with cooking instructions
-- Exercise and fitness tracking integration
-- Progress tracking and analytics dashboard
-- Social features (meal plan sharing, community feedback)
-- Push notifications for meal reminders
-- Integration with fitness trackers (Fitbit, Apple Health)
-- Multi-language support
-- Offline mode for saved diet plans
-- Video tutorials for meal preparation
+##  Future Enhancements
 
----
+- Progress tracking and history
+- Fitness and activity logging
 
-## 📝 Usage Guide
+##  Usage Guide
 
-1. **Create Your Profile:** Enter your health metrics (weight, height, age, activity level)
-2. **Select Goals:** Choose your dietary goal (weight loss, muscle gain, maintenance)
-3. **Input Preferences:** Specify dietary restrictions and food preferences
-4. **Generate Plan:** Let AI create a personalized diet plan
-5. **Follow Recommendations:** Get daily meal suggestions and nutritional guidance
-6. **Track Progress:** Monitor your adherence and health improvements
+1. Enter your personal health details.
+2. Choose your fitness goal.
+3. Select your dietary preference.
+4. Generate the weekly plan.
+5. Click a meal card to view recipe-style preparation guidance.
 
----
-
-## ⚙️ Configuration
+## Configuration
 
 ### Environment Variables
 
-Create a `.env` file in the `backend/` directory:
+Create backend/.env and add:
 
-```
+env
 GEMINI_API_KEY=your_google_gemini_api_key
-FLASK_ENV=development
-FLASK_DEBUG=True
-```
+
 
 ### Customization
 
-- **Food Database:** Update `food_dataset.csv` with additional foods and nutritional data
-- **API Keys:** Replace the Gemini API key in `.env`
-- **UI Theme:** Modify `frontend/static/css/style.css` for custom styling
+- *Food data:* edit backend/app.py to adjust built-in meal items
+- *Styles:* edit frontend/static/css/style.css
+- *Logic:* edit backend/app.py and frontend/static/js/app.js
 
----
-
-## 🐛 Troubleshooting
+##  Troubleshooting
 
 ### Backend won't start
-- Ensure Python 3.8+ is installed: `python --version`
-- Verify all dependencies are installed: `pip install -r requirements.txt`
-- Check if port 5000 is available
 
-### API key errors
-- Verify your Gemini API key is correct and active
-- Ensure `.env` file is in the `backend/` directory
-- Check that the key has necessary permissions
+- Confirm Python 3.8+ is installed
+- Activate the virtual environment
+- Install dependencies: pip install -r requirements.txt
+- Ensure port 5000 is free
 
-### Frontend not loading
-- Ensure Flask server is running on `http://localhost:5000`
-- Clear browser cache (Ctrl+Shift+Delete)
-- Check browser console for errors (F12)
+### AI key errors
 
----
+- Check the API key in backend/.env
+- Verify your Gemini key is valid and active
 
-## 🤝 Contributing
+### Frontend errors
 
-Contributions are welcome! Please feel free to submit a Pull Request with improvements.
+- Make sure Flask is running
+- Open browser developer console for errors
 
----
-
-## 📄 License
-
-This project is open-source and available under the MIT License.
-
----
-
-## 📧 Support
-
-For issues, questions, or suggestions, please open an issue on GitHub or contact the development team.
-
----
-
-**Happy healthy eating! 🥗🍎**
+*Happy healthy eating! 🥗🍎*
