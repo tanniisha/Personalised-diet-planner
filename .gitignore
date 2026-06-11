@@ -1,0 +1,9 @@
+backend/.env
+.env
+.env.local
+.env.*
+.venv/
+venv/
+__pycache__/
+node_modules/
+.vscode/
