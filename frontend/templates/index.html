@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriPlan AI - Personalised Weekly Diet Planner</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom Style Sheet -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="logo">
+                <i class="fa-solid fa-leaf text-glow"></i>
+                <span class="logo-text">NutriPlan <span class="accent-text">AI</span></span>
+            </div>
+        </header>
+
+        <!-- Main Layout -->
+        <main class="main-layout">
+            <!-- Sidebar Form Section -->
+            <section class="form-section glass-card">
+                <div class="section-header">
+                    <i class="fa-solid fa-sliders"></i>
+                    <h2>Your Profile</h2>
+                </div>
+                <form id="diet-form" class="diet-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="age">Age (Years)</label>
+                            <input type="number" id="age" name="age" min="10" max="100" value="25" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="gender">Gender</label>
+                            <select id="gender" name="gender" required>
+                                <option value="male" selected>Male</option>
+                                <option value="female">Female</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="height">Height (cm)</label>
+                            <input type="number" id="height" name="height" min="100" max="250" value="175" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="weight">Weight (kg)</label>
+                            <input type="number" id="weight" name="weight" min="30" max="250" value="70" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="activity">Activity Level</label>
+                        <select id="activity" name="activity" required>
+                            <option value="sedentary">Sedentary (Little or no exercise)</option>
+                            <option value="light">Lightly Active (1-3 days/week exercise)</option>
+                            <option value="moderate" selected>Moderately Active (3-5 days/week exercise)</option>
+                            <option value="active">Very Active (6-7 days/week exercise)</option>
+                            <option value="extra">Extra Active (Physical job or heavy training)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="goal">Fitness Goal</label>
+                        <select id="goal" name="goal" required>
+                            <option value="loss">Weight Loss (Calorie Deficit)</option>
+                            <option value="maintenance" selected>Weight Maintenance</option>
+                            <option value="gain">Weight Gain (Calorie Surplus)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="diet_pref">Dietary Preference</label>
+                        <select id="diet_pref" name="diet_pref" required>
+                            <option value="vegetarian" selected>Vegetarian (No meat/fish, dairy OK)</option>
+                            <option value="vegan">Vegan (100% Plant-based, no dairy/eggs)</option>
+                            <option value="non-vegetarian">Non-Vegetarian (All foods)</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" id="submit-btn">
+                        <span>Generate Weekly Plan</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </form>
+            </section>
+
+            <!-- Dashboard Results Section -->
+            <section class="dashboard-section">
+                <!-- Welcome/Placeholder Card -->
+                <div id="placeholder-view" class="placeholder-card glass-card">
+                    <div class="placeholder-icon">
+                        <i class="fa-solid fa-circle-nodes pulse-animation"></i>
+                    </div>
+                    <h3>Ready to Plan Your Nutrition?</h3>
+                    <p>Enter your profile details in the left panel and click "Generate Weekly Plan" to compute your BMI, daily calorie goals, and produce a customized 7-day meal outline using Pandas and NumPy portion scaling.</p>
+                </div>
+
+                <!-- Loader -->
+                <div id="loader" class="loader-container hidden">
+                    <div class="spinner"></div>
+                    <p>Building weekly menu & scaling daily portions...</p>
+                </div>
+
+                <!-- Main Result Container -->
+                <div id="results-view" class="results-container hidden">
+                    <!-- Dashboard Header -->
+                    <div class="results-header">
+                        <button type="button" class="btn btn-secondary" id="edit-profile-btn">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                            <span>Edit Profile</span>
+                        </button>
+                    </div>
+
+                    <!-- Metric Cards Row -->
+                    <div class="metrics-grid">
+                        <!-- Calorie Target -->
+                        <div class="metric-card glass-card border-glow-purple">
+                            <div class="metric-icon bg-purple">
+                                <i class="fa-solid fa-fire"></i>
+                            </div>
+                            <div class="metric-info">
+                                <span class="metric-label">Calorie Goal</span>
+                                <h3 id="display-calories">--</h3>
+                                <span class="metric-unit">kcal / day</span>
+                            </div>
+                        </div>
+
+                        <!-- BMI Indicator -->
+                        <div class="metric-card glass-card border-glow-blue">
+                            <div class="metric-icon bg-blue">
+                                <i class="fa-solid fa-weight-scale"></i>
+                            </div>
+                            <div class="metric-info">
+                                <span class="metric-label">Body Mass Index (BMI)</span>
+                                <h3 id="display-bmi">--</h3>
+                                <span id="display-bmi-status" class="metric-status status-normal">--</span>
+                            </div>
+                        </div>
+
+                        <!-- Calorie Deviation (Actual vs Target) -->
+                        <div class="metric-card glass-card border-glow-green">
+                            <div class="metric-icon bg-green">
+                                <i class="fa-solid fa-circle-check"></i>
+                            </div>
+                            <div class="metric-info">
+                                <span class="metric-label">Selected Day Calories</span>
+                                <h3 id="display-actual-calories">--</h3>
+                                <span class="metric-subtext">Balanced via NumPy</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Weekly Day Selector Tabs -->
+                    <div class="weekly-tabs-container glass-card">
+                        <div class="weekly-tabs">
+                            <button type="button" class="tab-btn active" data-day="Monday">Monday</button>
+                            <button type="button" class="tab-btn" data-day="Tuesday">Tuesday</button>
+                            <button type="button" class="tab-btn" data-day="Wednesday">Wednesday</button>
+                            <button type="button" class="tab-btn" data-day="Thursday">Thursday</button>
+                            <button type="button" class="tab-btn" data-day="Friday">Friday</button>
+                            <button type="button" class="tab-btn" data-day="Saturday">Saturday</button>
+                            <button type="button" class="tab-btn" data-day="Sunday">Sunday</button>
+                        </div>
+                    </div>
+
+                    <!-- Macro Chart and Breakdown -->
+                    <div class="macro-breakdown-section glass-card">
+                        <div class="card-title-bar">
+                            <h3>Macronutrient Targets vs <span id="active-day-label">Monday</span> Recommendations</h3>
+                            <i class="fa-solid fa-chart-pie"></i>
+                        </div>
+                        <div class="macro-layout">
+                            <div class="chart-wrapper">
+                                <canvas id="macroChart"></canvas>
+                            </div>
+                            <div class="macro-stats">
+                                <div class="macro-row protein">
+                                    <div class="macro-label-group">
+                                        <span class="color-dot bg-protein"></span>
+                                        <strong>Protein</strong>
+                                    </div>
+                                    <div class="macro-value-group">
+                                        <span class="actual-val"><span id="actual-protein">0</span>g</span>
+                                        <span class="target-val">/ <span id="target-protein">0</span>g target</span>
+                                    </div>
+                                </div>
+                                <div class="macro-row carbs">
+                                    <div class="macro-label-group">
+                                        <span class="color-dot bg-carbs"></span>
+                                        <strong>Carbohydrates</strong>
+                                    </div>
+                                    <div class="macro-value-group">
+                                        <span class="actual-val"><span id="actual-carbs">0</span>g</span>
+                                        <span class="target-val">/ <span id="target-carbs">0</span>g target</span>
+                                    </div>
+                                </div>
+                                <div class="macro-row fat">
+                                    <div class="macro-label-group">
+                                        <span class="color-dot bg-fat"></span>
+                                        <strong>Fats</strong>
+                                    </div>
+                                    <div class="macro-value-group">
+                                        <span class="actual-val"><span id="actual-fat">0</span>g</span>
+                                        <span class="target-val">/ <span id="target-fat">0</span>g target</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recommended Meal Cards -->
+                    <div class="meal-recommendations-title">
+                        <i class="fa-solid fa-utensils"></i>
+                        <h3>Meals for <span id="active-day-title">Monday</span></h3>
+                    </div>
+                    <div class="meals-grid">
+                        <!-- Breakfast Card -->
+                        <div class="meal-card glass-card hover-lift" id="breakfast-card">
+                            <div class="meal-card-header">
+                                <span class="meal-tag tag-breakfast"><i class="fa-solid fa-mug-saucer"></i> Breakfast</span>
+                                <span class="meal-cal" id="breakfast-calories">0 kcal</span>
+                            </div>
+                            <h4 class="meal-name" id="breakfast-name">Meal Name</h4>
+                            <div class="meal-portion"><i class="fa-solid fa-scale-balanced"></i> Portion: <span id="breakfast-portion">0</span>g</div>
+                            <div class="meal-macros">
+                                <div>P: <strong id="breakfast-p">0</strong>g</div>
+                                <div>C: <strong id="breakfast-c">0</strong>g</div>
+                                <div>F: <strong id="breakfast-f">0</strong>g</div>
+                            </div>
+                        </div>
+
+                        <!-- Lunch Card -->
+                        <div class="meal-card glass-card hover-lift" id="lunch-card">
+                            <div class="meal-card-header">
+                                <span class="meal-tag tag-lunch"><i class="fa-solid fa-bowl-food"></i> Lunch</span>
+                                <span class="meal-cal" id="lunch-calories">0 kcal</span>
+                            </div>
+                            <h4 class="meal-name" id="lunch-name">Meal Name</h4>
+                            <div class="meal-portion"><i class="fa-solid fa-scale-balanced"></i> Portion: <span id="lunch-portion">0</span>g</div>
+                            <div class="meal-macros">
+                                <div>P: <strong id="lunch-p">0</strong>g</div>
+                                <div>C: <strong id="lunch-c">0</strong>g</div>
+                                <div>F: <strong id="lunch-f">0</strong>g</div>
+                            </div>
+                        </div>
+
+                        <!-- Snacks Card -->
+                        <div class="meal-card glass-card hover-lift" id="snack-card">
+                            <div class="meal-card-header">
+                                <span class="meal-tag tag-snack"><i class="fa-solid fa-apple-whole"></i> Snacks</span>
+                                <span class="meal-cal" id="snack-calories">0 kcal</span>
+                            </div>
+                            <h4 class="meal-name" id="snack-name">Meal Name</h4>
+                            <div class="meal-portion"><i class="fa-solid fa-scale-balanced"></i> Portion: <span id="snack-portion">0</span>g</div>
+                            <div class="meal-macros">
+                                <div>P: <strong id="snack-p">0</strong>g</div>
+                                <div>C: <strong id="snack-c">0</strong>g</div>
+                                <div>F: <strong id="snack-f">0</strong>g</div>
+                            </div>
+                        </div>
+
+                        <!-- Dinner Card -->
+                        <div class="meal-card glass-card hover-lift" id="dinner-card">
+                            <div class="meal-card-header">
+                                <span class="meal-tag tag-dinner"><i class="fa-solid fa-plate-wheat"></i> Dinner</span>
+                                <span class="meal-cal" id="dinner-calories">0 kcal</span>
+                            </div>
+                            <h4 class="meal-name" id="dinner-name">Meal Name</h4>
+                            <div class="meal-portion"><i class="fa-solid fa-scale-balanced"></i> Portion: <span id="dinner-portion">0</span>g</div>
+                            <div class="meal-macros">
+                                <div>P: <strong id="dinner-p">0</strong>g</div>
+                                <div>C: <strong id="dinner-c">0</strong>g</div>
+                                <div>F: <strong id="dinner-f">0</strong>g</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gemini AI Suggestions Card -->
+                    <div id="ai-section" class="ai-section glass-card border-glow-accent hidden">
+                        <div class="ai-header">
+                            <div class="ai-title">
+                                <i class="fa-solid fa-wand-magic-sparkles text-glow"></i>
+                                <h3>AI Recipe Guide & Weekly Preparation Coaching</h3>
+                            </div>
+                            <span class="ai-badge">Powered by Gemini</span>
+                        </div>
+                        <div class="ai-content markdown-body" id="ai-content-body">
+                            <!-- Rendered Markdown goes here -->
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Chart.js for visualization -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Marked.js for markdown parsing -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Main JavaScript App Logic -->
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

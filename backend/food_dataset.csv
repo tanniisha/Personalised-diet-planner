@@ -1,0 +1,40 @@
+food_id,name,category,diet_type,calories,protein,carbs,fat,serving_size
+1,Oatmeal with Bananas & Chia Seeds,Breakfast,Vegan,150,4.5,27.0,3.0,100g
+2,Tofu Scramble with Spinach,Breakfast,Vegan,120,9.0,3.0,8.0,100g
+3,Avocado Toast on Sourdough,Breakfast,Vegan,220,5.0,24.0,11.0,100g
+4,Fruit Salad with Walnuts,Breakfast,Vegan,95,1.5,18.0,3.5,100g
+5,Greek Yogurt with Honey & Almonds,Breakfast,Vegetarian,140,8.0,12.0,6.0,100g
+6,Scrambled Eggs with Butter & Toast,Breakfast,Vegetarian,210,11.0,15.0,12.0,100g
+7,Paneer Bhurji with Toast,Breakfast,Vegetarian,240,12.0,18.0,14.0,100g
+8,Classic Veggie Omelet,Breakfast,Vegetarian,130,9.0,2.0,10.0,100g
+9,Bacon and Eggs with Toast,Breakfast,Non-Vegetarian,290,16.0,14.0,20.0,100g
+10,Chicken Sausage with Veggie Omelet,Breakfast,Non-Vegetarian,180,15.0,2.0,13.0,100g
+11,Smoked Salmon Bagel with Cream Cheese,Breakfast,Non-Vegetarian,260,14.0,32.0,8.0,100g
+12,Chickpea Curry with Brown Rice,Lunch,Vegan,140,5.0,22.0,3.5,100g
+13,Quinoa Salad with Mixed Beans,Lunch,Vegan,155,6.0,21.0,4.5,100g
+14,Tofu Veggie Stir Fry with Noodles,Lunch,Vegan,130,5.5,18.0,4.0,100g
+15,Lentil Soup with Whole Wheat Bread,Lunch,Vegan,110,6.0,17.0,1.5,100g
+16,Paneer Tikka Masala with Basmati Rice,Lunch,Vegetarian,190,7.5,20.0,9.0,100g
+17,Mixed Vegetable Khichdi,Lunch,Vegetarian,120,4.0,21.0,2.5,100g
+18,Spinach and Feta Salad with Quinoa,Lunch,Vegetarian,150,5.0,16.0,7.0,100g
+19,Grilled Chicken Breast with Brown Rice,Lunch,Non-Vegetarian,165,18.0,15.0,3.5,100g
+20,Salmon Salad with Avocado,Lunch,Non-Vegetarian,185,15.0,4.0,12.0,100g
+21,Turkey and Cheese Wrap,Lunch,Non-Vegetarian,210,14.0,22.0,7.0,100g
+22,Black Bean & Sweet Potato Chili,Dinner,Vegan,115,4.0,21.0,1.5,100g
+23,Quinoa Stuffed Bell Peppers,Dinner,Vegan,130,5.0,20.0,3.0,100g
+24,Tofu and Broccoli with Quinoa,Dinner,Vegan,145,7.0,18.0,5.0,100g
+25,Palak Paneer with Whole Wheat Roti,Dinner,Vegetarian,170,8.0,18.0,7.5,100g
+26,Vegetable Biryani with Cucumber Raita,Dinner,Vegetarian,140,3.5,24.0,3.0,100g
+27,Creamy Mushroom Risotto,Dinner,Vegetarian,160,4.0,22.0,6.5,100g
+28,Baked Salmon with Grilled Asparagus,Dinner,Non-Vegetarian,180,20.0,3.0,10.0,100g
+29,Grilled Sirloin Steak with Mashed Potatoes,Dinner,Non-Vegetarian,220,19.0,16.0,9.5,100g
+30,Chicken Stir-Fry with Broccoli & Rice,Dinner,Non-Vegetarian,150,14.0,16.0,3.0,100g
+31,Mixed Roasted Nuts,Snack,Vegan,600,20.0,21.0,54.0,100g
+32,Roasted Chickpeas,Snack,Vegan,360,19.0,58.0,6.0,100g
+33,Carrot Sticks with Hummus,Snack,Vegan,80,2.0,9.0,4.5,100g
+34,Apple Slices with Peanut Butter,Snack,Vegan,120,2.5,15.0,6.5,100g
+35,Cottage Cheese (Paneer) Cubes,Snack,Vegetarian,265,18.0,1.2,20.0,100g
+36,Hard Boiled Eggs,Snack,Vegetarian,155,13.0,1.1,11.0,100g
+37,Whey Protein Shake in Milk,Snack,Vegetarian,90,10.0,6.0,2.5,100g
+38,Turkey Breast Roll-ups,Snack,Non-Vegetarian,110,22.0,1.0,2.0,100g
+39,Tuna Salad with Whole Wheat Crackers,Snack,Non-Vegetarian,170,16.0,14.0,6.0,100g
